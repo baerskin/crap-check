@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "crap-check config",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "outDir": {
+      "type": "string",
+      "minLength": 1,
+      "default": ".complexity",
+      "description": "Where the artifacts go, relative to the repository root."
+    },
+    "ref": {
+      "type": ["string", "null"],
+      "description": "The ref whose first-parent history is walked. Null detects origin/HEAD, then origin/main, then origin/master, then HEAD."
+    },
+    "extensions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "File extensions to measure."
+    },
+    "exclude": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Globs to skip, added to the default excludes."
+    },
+    "test": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Globs that mark a test file. Replaces the defaults."
+    },
+    "workspaces": {
+      "type": ["array", "null"],
+      "items": { "type": "string" },
+      "description": "Globs naming workspace directories, such as packages/*. Null makes each directory with a package.json a workspace."
+    },
+    "events": {
+      "type": "array",
+      "description": "Labelled markers drawn on the charts.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["week", "label"],
+        "properties": {
+          "week": { "type": "string", "pattern": "^\\d{4}-W\\d{2}$" },
+          "label": { "type": "string" }
+        }
+      }
+    },
+    "coverage": {
+      "type": "array",
+      "description": "Coverage commands for the CRAP score. Empty turns CRAP off.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["command"],
+        "properties": {
+          "cwd": {
+            "type": "string",
+            "default": ".",
+            "description": "Directory to run in, relative to the repository root."
+          },
+          "command": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Shell command that writes an lcov report."
+          },
+          "lcov": {
+            "type": "string",
+            "default": "coverage/lcov.info",
+            "description": "The lcov file the command writes, relative to cwd."
+          }
+        }
+      }
+    }
+  }
+}
