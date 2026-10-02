@@ -1,10 +1,8 @@
 name: release
 
-# Runs when a `v*` tag is pushed. `publish` releases to npm with trusted
-# publishing (OIDC), so no npm token is stored in the repository. Configure the
-# trusted publisher for this repository and workflow on npmjs.com first.
-# `showcase` then installs the version it just published from npm, measures
-# this repository with it, and commits `.complexity/` to main.
+# Runs when a `v*` tag is pushed. npm publishing is manual, so publish the
+# version first. `showcase` waits until npm serves the version, installs it from
+# npm, measures this repository with it, and commits `.complexity/` to main.
 
 on:
   push:
@@ -13,35 +11,8 @@ on:
 permissions: {}
 
 jobs:
-  publish:
-    name: Publish
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        with:
-          node-version: 24
-          registry-url: https://registry.npmjs.org
-      # Trusted publishing needs npm 11.5.1 or later. Pin it, so the release
-      # does not depend on the npm that ships with the runner's Node.
-      - run: npm install -g npm@11.20.0
-      - run: bun install --frozen-lockfile
-      - name: Check the tag matches package.json
-        env:
-          TAG: ${{ github.ref_name }}
-        run: test "$TAG" = "v$(node -p 'require("./package.json").version')"
-      - run: npm publish --provenance --access public
-
   showcase:
     name: Measure this repository with the published version
-    needs: publish
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:

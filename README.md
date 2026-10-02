@@ -817,27 +817,18 @@ CRAP_CHECK_ORACLE_REPO=/path/to/repo bun test test/oracle.spec.ts
 
 ### Release
 
-The first version is published by hand, because the trusted publisher is set
-on the package page of npmjs.com:
+Publishing to npm is manual:
 
 ```bash
 npm login
-bun run typecheck && bun test && bun run build
-npm publish --access public
+npm version 0.2.0 -m "chore(release): 🔖 %s"
+npm publish --access public   # prepublishOnly runs the typecheck, tests and build
+git push origin main v0.2.0
 ```
 
-Later versions are published from CI:
-
-1. On npmjs.com, open the package settings. Add a trusted publisher for
-   GitHub Actions with this repository and the workflow file `release.yml`.
-   The fields are case-sensitive, and npm does not check them when you save
-   them[^14^].
-2. Change `version` in `package.json` and commit.
-3. Push a tag that matches the version, for example `v0.2.0`.
-
-`release.yml` installs npm 11.20.0, because trusted publishing needs npm
-11.5.1 or later[^14^]. Then it checks that the tag matches `package.json` and
-runs `npm publish --provenance --access public`.
+The `v*` tag starts `release.yml`. It waits until npm serves the version, then
+installs that version from npm, measures this repository with it, and commits
+`.complexity/` to `main`.
 
 ## References
 
@@ -853,7 +844,6 @@ runs `npm publish --provenance --access public`.
 - ISO week date[^12^].
 - `git cat-file`[^13^].
 - GitHub Actions events, triggers, repository settings and workflow syntax[^1^][^15^][^2^][^3^].
-- npm trusted publishing[^14^].
 
 ## License
 
@@ -884,7 +874,5 @@ MIT © 2026 Gus Fune. See [LICENSE](LICENSE).
 [^12^]: https://en.wikipedia.org/wiki/ISO_week_date
 
 [^13^]: https://git-scm.com/docs/git-cat-file
-
-[^14^]: https://docs.npmjs.com/trusted-publishers
 
 [^15^]: https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow
