@@ -1,8 +1,10 @@
 name: release
 
-# Publishes to npm when a `v*` tag is pushed. Uses npm trusted publishing
-# (OIDC), so no npm token is stored in the repository. Configure the trusted
-# publisher for this repository and workflow on npmjs.com before the first tag.
+# Runs when a `v*` tag is pushed. `publish` releases to npm with trusted
+# publishing (OIDC), so no npm token is stored in the repository. Configure the
+# trusted publisher for this repository and workflow on npmjs.com first.
+# `showcase` then installs the version it just published from npm, measures
+# this repository with it, and commits `.complexity/` to main.
 
 on:
   push:
@@ -36,3 +38,96 @@ jobs:
           TAG: ${{ github.ref_name }}
         run: test "$TAG" = "v$(node -p 'require("./package.json").version')"
       - run: npm publish --provenance --access public
+
+  showcase:
+    name: Measure this repository with the published version
+    needs: publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    env:
+      TAG: ${{ github.ref_name }}
+      PACKAGE: "@gusfuneo/crap-check"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          # The history walk reads every week's commit out of the object database.
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+      # The coverage command in crap-check.config.json runs `bun test`.
+      - run: bun install --frozen-lockfile
+      - name: Wait until npm serves the new version
+        run: |
+          for attempt in $(seq 1 20); do
+            if npm view "$PACKAGE@${TAG#v}" version >/dev/null 2>&1; then
+              exit 0
+            fi
+            echo "Not on the registry yet, attempt $attempt."
+            sleep 30
+          done
+          echo "::error::$PACKAGE@${TAG#v} is not on the registry after 10 minutes."
+          exit 1
+      - name: Refresh and write back
+        run: |
+          set -euo pipefail
+
+          # The root package.json has the same name and version, so a plain npx
+          # resolves this checkout, which has no linked bin. A separate prefix
+          # makes npx install the published package from the registry. npm needs
+          # the prefix directory to exist.
+          mkdir -p "$RUNNER_TEMP/crap-check"
+          cli() {
+            npx -y --prefix "$RUNNER_TEMP/crap-check" "$PACKAGE@${TAG#v}" "$@"
+          }
+
+          refresh() {
+            cli refresh --ref origin/main
+            git add .complexity
+          }
+
+          commit() {
+            git -c user.name='github-actions[bot]' \
+                -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+                commit -m "chore(crap-check): 📈 refresh the complexity history for $TAG [skip ci]"
+          }
+
+          {
+            echo "## crap-check $TAG on itself"
+            echo '```'
+            cli --top 10
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          refresh
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+            exit 0
+          fi
+          commit
+
+          # A rejected push means main moved during the run. Rebuild on the new tip:
+          # regeneration cannot conflict on history.json, a rebase can.
+          for attempt in 1 2 3; do
+            if git push origin HEAD:refs/heads/main; then
+              echo "Landed on main on attempt $attempt."
+              exit 0
+            fi
+            echo "main moved during the run. Rebuilding on the new tip."
+            git fetch --no-tags origin main
+            git reset --hard FETCH_HEAD
+            refresh
+            if git diff --cached --quiet; then
+              echo "The new tip already carries this data."
+              exit 0
+            fi
+            commit
+          done
+
+          echo "::error::main kept moving. Three pushes were rejected."
+          exit 1
