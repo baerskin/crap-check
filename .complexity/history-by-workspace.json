@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 4,
+  "weeks": [
+    {
+      "week": "2026-W40",
+      "commit": "526b31fb72c2c988a3785e87dd350556c62d5c72",
+      "source": {
+        "<root>": 685
+      },
+      "test": {
+        "<root>": 499
+      },
+      "sourceCognitive": {
+        "<root>": 513
+      },
+      "testCognitive": {
+        "<root>": 19
+      }
+    }
+  ]
+}

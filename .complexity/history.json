@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 4,
+  "weeks": [
+    {
+      "week": "2026-W40",
+      "date": "2026-10-02T15:47:40+01:00",
+      "commit": "526b31fb72c2c988a3785e87dd350556c62d5c72",
+      "source": {
+        "files": 24,
+        "functions": 235,
+        "complexity": 685,
+        "lines": 4790,
+        "avgPerFunction": 2.91,
+        "maxFunction": 23,
+        "over10": 13,
+        "over20": 3,
+        "over50": 0,
+        "cognitive": 513,
+        "cognitiveMaxFunction": 95,
+        "cogOver15": 6
+      },
+      "test": {
+        "files": 16,
+        "functions": 415,
+        "complexity": 499,
+        "lines": 3711,
+        "avgPerFunction": 1.2,
+        "maxFunction": 9,
+        "over10": 0,
+        "over20": 0,
+        "over50": 0,
+        "cognitive": 19,
+        "cognitiveMaxFunction": 6,
+        "cogOver15": 0
+      }
+    }
+  ]
+}

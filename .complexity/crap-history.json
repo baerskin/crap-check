@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 2,
+  "weeks": [
+    {
+      "week": "2026-W40",
+      "date": "2026-10-02T15:47:40+01:00",
+      "commit": "526b31fb72c2c988a3785e87dd350556c62d5c72",
+      "partial": false,
+      "totals": {
+        "scored": 86,
+        "unmeasured": 0,
+        "short": 149,
+        "over30": 4,
+        "untested": 13,
+        "total": 1068.15,
+        "avg": 12.42,
+        "worst": 210
+      }
+    }
+  ]
+}
