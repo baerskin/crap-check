@@ -1,0 +1,10 @@
+{
+  "$schema": "./crap-check.schema.json",
+  "coverage": [
+    {
+      "cwd": ".",
+      "command": "bun test --coverage --coverage-reporter=lcov",
+      "lcov": "coverage/lcov.info"
+    }
+  ]
+}
