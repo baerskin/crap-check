@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "@gusfuneo/crap-check",
+      "name": "crap-check",
       "dependencies": {
         "typescript": "6.0.3",
       },

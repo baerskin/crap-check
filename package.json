@@ -1,16 +1,16 @@
 {
-  "name": "@gusfuneo/crap-check",
+  "name": "crap-check",
   "version": "0.1.2",
   "description": "Cyclomatic, cognitive and CRAP complexity for TypeScript and JavaScript repositories, with weekly git history, SVG charts, pull-request deltas and a generated GitHub Action.",
   "license": "MIT",
   "author": "Gus Fune",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gusfune/crap-check.git"
+    "url": "git+https://github.com/baerskin/crap-check.git"
   },
-  "homepage": "https://github.com/gusfune/crap-check#readme",
+  "homepage": "https://github.com/baerskin/crap-check#readme",
   "bugs": {
-    "url": "https://github.com/gusfune/crap-check/issues"
+    "url": "https://github.com/baerskin/crap-check/issues"
   },
   "type": "module",
   "bin": {

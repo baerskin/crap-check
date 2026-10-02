@@ -15,7 +15,7 @@ repositories.
   you choose.
 
 ```bash
-npx @gusfuneo/crap-check
+npx crap-check
 ```
 
 ## Contents
@@ -50,20 +50,20 @@ does not change with the TypeScript version of your repository.
 Run it with no install:
 
 ```bash
-npx @gusfuneo/crap-check --help
-bunx @gusfuneo/crap-check --help
-pnpm dlx @gusfuneo/crap-check --help
+npx crap-check --help
+bunx crap-check --help
+pnpm dlx crap-check --help
 ```
 
 Or add it as a development dependency with an exact version:
 
 ```bash
-npm install --save-dev --save-exact @gusfuneo/crap-check
-bun add --dev --exact @gusfuneo/crap-check
+npm install --save-dev --save-exact crap-check
+bun add --dev --exact crap-check
 ```
 
 The binary is `crap-check`. The examples below use the short name. With no
-install, put `npx @gusfuneo/crap-check` in place of `crap-check`.
+install, put `npx crap-check` in place of `crap-check`.
 
 ## Quick start
 
@@ -218,11 +218,11 @@ needs[^3^]:
 
 Each action is pinned to a full commit SHA, with the version in a comment. The
 CLI is pinned to the version that wrote the file, for example
-`npx -y @gusfuneo/crap-check@0.1.0`. An upgrade is therefore your decision. To
+`npx -y crap-check@0.1.0`. An upgrade is therefore your decision. To
 upgrade, run the new version with `--force`:
 
 ```bash
-npx @gusfuneo/crap-check@latest init --force --pr-comment
+npx crap-check@latest init --force --pr-comment
 ```
 
 `--force` writes the workflows again and keeps the config.
@@ -388,7 +388,7 @@ without a message.
 
 ```json
 {
-  "$schema": "https://unpkg.com/@gusfuneo/crap-check/crap-check.schema.json",
+  "$schema": "https://unpkg.com/crap-check/crap-check.schema.json",
   "outDir": ".complexity",
   "ref": "origin/main",
   "extensions": [".ts", ".tsx"],
@@ -847,7 +847,7 @@ installs that version from npm, measures this repository with it, and commits
 
 ## License
 
-MIT © 2026 Gus Fune. See [LICENSE](LICENSE).
+MIT © 2026 BÆRSkin Tactical. See [LICENSE](LICENSE).
 
 [^1^]: https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
 

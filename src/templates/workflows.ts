@@ -33,7 +33,7 @@ export interface HistoryWorkflowOptions {
   outDir: string
   /** The package manager to install with, or `null` to skip the install. */
   install: PackageManager | null
-  /** The pinned CLI invocation, such as `npx -y @gusfuneo/crap-check@0.1.0`. */
+  /** The pinned CLI invocation, such as `npx -y crap-check@0.1.0`. */
   cli: string
 }
 
