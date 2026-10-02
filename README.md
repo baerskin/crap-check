@@ -15,7 +15,7 @@ repositories.
   you choose.
 
 ```bash
-npx @gusfune/crap-check
+npx @gusfuneo/crap-check
 ```
 
 ## Contents
@@ -50,20 +50,20 @@ does not change with the TypeScript version of your repository.
 Run it with no install:
 
 ```bash
-npx @gusfune/crap-check --help
-bunx @gusfune/crap-check --help
-pnpm dlx @gusfune/crap-check --help
+npx @gusfuneo/crap-check --help
+bunx @gusfuneo/crap-check --help
+pnpm dlx @gusfuneo/crap-check --help
 ```
 
 Or add it as a development dependency with an exact version:
 
 ```bash
-npm install --save-dev --save-exact @gusfune/crap-check
-bun add --dev --exact @gusfune/crap-check
+npm install --save-dev --save-exact @gusfuneo/crap-check
+bun add --dev --exact @gusfuneo/crap-check
 ```
 
 The binary is `crap-check`. The examples below use the short name. With no
-install, put `npx @gusfune/crap-check` in place of `crap-check`.
+install, put `npx @gusfuneo/crap-check` in place of `crap-check`.
 
 ## Quick start
 
@@ -218,11 +218,11 @@ needs[^3^]:
 
 Each action is pinned to a full commit SHA, with the version in a comment. The
 CLI is pinned to the version that wrote the file, for example
-`npx -y @gusfune/crap-check@0.1.0`. An upgrade is therefore your decision. To
+`npx -y @gusfuneo/crap-check@0.1.0`. An upgrade is therefore your decision. To
 upgrade, run the new version with `--force`:
 
 ```bash
-npx @gusfune/crap-check@latest init --force --pr-comment
+npx @gusfuneo/crap-check@latest init --force --pr-comment
 ```
 
 `--force` writes the workflows again and keeps the config.
@@ -388,7 +388,7 @@ without a message.
 
 ```json
 {
-  "$schema": "https://unpkg.com/@gusfune/crap-check/crap-check.schema.json",
+  "$schema": "https://unpkg.com/@gusfuneo/crap-check/crap-check.schema.json",
   "outDir": ".complexity",
   "ref": "origin/main",
   "extensions": [".ts", ".tsx"],

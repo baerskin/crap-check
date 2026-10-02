@@ -1,5 +1,5 @@
 {
-  "name": "@gusfune/crap-check",
+  "name": "@gusfuneo/crap-check",
   "version": "0.1.0",
   "description": "Cyclomatic, cognitive and CRAP complexity for TypeScript and JavaScript repositories, with weekly git history, SVG charts, pull-request deltas and a generated GitHub Action.",
   "license": "MIT",
