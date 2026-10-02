@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-02T15:03:40.302Z",
-  "commit": "526b31fb72c2c988a3785e87dd350556c62d5c72",
+  "generatedAt": "2026-10-02T15:48:46.212Z",
+  "commit": "72ede6c5a5f8a8bf60356e1c36dea223242f9c19",
   "ref": "main",
   "rule": "NDepend ND1609: CRAP = CC^2 * U^3 + CC, flagged above 30 for a function longer than 10 lines",
   "partial": false,
